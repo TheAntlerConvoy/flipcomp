@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FlipComp Privacy Policy</title>
+<meta name="description" content="How the FlipComp browser extension handles your data.">
+<style>
+  :root { --bg: #ffffff; --fg: #1c1e21; --muted: #5f6368; --line: #e3e5e8; --accent: #0c7a53; color-scheme: light; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #1f2021; --fg: #e4e6eb; --muted: #b0b3b8; --line: #3a3b3c; --accent: #3cc48c; color-scheme: dark; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  main { max-width: 720px; margin: 0 auto; padding: 40px 16px 64px; }
+  h1 { font-size: 30px; line-height: 1.2; margin: 0 0 6px; }
+  h2 { font-size: 19px; margin: 32px 0 8px; }
+  p, li { margin: 0 0 12px; }
+  ul { padding-left: 22px; }
+  a { color: var(--accent); }
+  .muted { color: var(--muted); }
+  .summary { border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 20px 0; }
+  code { font-size: 14px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>FlipComp Privacy Policy</h1>
+  <p class="muted">Effective September 27, 2026</p>
+
+  <div class="summary">
+    <p style="margin:0">FlipComp reads the Facebook Marketplace listing you are looking at and sends the listing text, and sometimes its main photo, to the FlipComp server. The server uses an AI model to turn the listing into an eBay search. FlipComp then loads eBay's sold listings for that search from your own browser and shows the results next to the listing. FlipComp does not read your Facebook or eBay account details, does not show ads, and does not sell or share your data.</p>
+  </div>
+
+  <h2>What FlipComp reads on Facebook</h2>
+  <p>FlipComp only reads Facebook Marketplace listing pages (addresses that contain <code>/marketplace/item/</code>). On those pages it reads the listing's title, price, category, condition, description and the address of its main photo. It also reads whether the listing is a vehicle or a rental, so that it can skip those.</p>
+  <p>FlipComp does not read the seller's name or profile, your messages, your Facebook account or any other Facebook page. The extension is loaded on facebook.com because Facebook changes pages without reloading them, but outside listing pages it only checks the page address.</p>
+
+  <h2>What is sent to the FlipComp server</h2>
+  <p>When you check a listing, FlipComp sends the following to its server, which runs on Cloudflare:</p>
+  <ul>
+    <li>The listing's title, price, category, condition, description (up to 1,500 characters) and Facebook listing number.</li>
+    <li>The listing's main photo, reduced to 512 pixels, but only when the text is not enough to tell what the item is.</li>
+    <li>A random ID that FlipComp creates when it is installed. It is used to count free lookups and is not linked to your name or accounts.</li>
+    <li>If you have opened the FlipComp payment page, your ExtensionPay key, so the server can confirm with ExtensionPay whether you have Pro.</li>
+    <li>If you type your own eBay search, that search.</li>
+  </ul>
+  <p>Like any website, the server also receives your IP address. FlipComp turns it into a one-way code (a hash) to limit how many free lookups can come from one internet connection, and those codes are deleted within 2 days.</p>
+
+  <h2>How the AI is used</h2>
+  <p>The server sends the listing text, and the photo when needed, to the OpenAI API. The AI answers with an eBay search, a short name for the item, its likely condition and a shipping size. FlipComp asks OpenAI not to store these answers. OpenAI does not use data sent through its API to train its models, and it may keep API data for up to 30 days to watch for abuse. <a href="https://openai.com/policies/api-data-usage-policies">OpenAI's API data policy</a> describes how OpenAI handles API data.</p>
+
+  <h2>What the FlipComp server stores</h2>
+  <ul>
+    <li>The AI's answer for each listing (the Facebook listing number, the suggested eBay search, the item name, condition and size) for 14 days, so the next person who checks the same listing gets the answer without another AI request.</li>
+    <li>How many lookups each install made that day, stored under a one-way code of the install ID, for 2 days.</li>
+    <li>A cost record for each AI request: a one-way code of the install ID, the Facebook listing number, the number of AI tokens used and the cost. These are kept for 180 days so the developer can see what the service costs.</li>
+    <li>Whether a one-way code of an ExtensionPay key belongs to a Pro subscriber, for up to 60 days.</li>
+  </ul>
+  <p>The server does not store listing descriptions or photos.</p>
+
+  <h2>What FlipComp does on eBay</h2>
+  <p>To find sold prices, FlipComp loads eBay's sold-listings search for the item directly from your browser. Since July 2026, eBay only shows sold listings to signed-in members, so these requests use your own eBay sign-in, the same as if you opened the search yourself. If eBay refuses a background request, FlipComp opens the same search in a background tab and closes the tab once it has read the results.</p>
+  <p>From those pages FlipComp reads the sold listings' titles, prices, shipping costs, sale dates and item numbers. It does not read your eBay account details, messages, purchases or watchlist, and nothing from eBay is sent to the FlipComp server. FlipComp limits how often it loads eBay pages, and it never tries to get past eBay's security checks.</p>
+
+  <h2>What FlipComp stores on your computer</h2>
+  <p>FlipComp stores the following in your browser's extension storage on your own computer:</p>
+  <ul>
+    <li>Your settings, such as eBay fee rates, shipping costs and deal score thresholds.</li>
+    <li>The random install ID described above.</li>
+    <li>Recent results, so that reopening a listing is free: listing results for 24 hours and eBay search results for 6 hours.</li>
+    <li>For Pro users, a history of your last 500 lookups and your saved eBay searches. You can clear the history or download it as a file on the Settings page.</li>
+    <li>A record of when eBay pages were loaded, used only to limit how often FlipComp asks eBay.</li>
+  </ul>
+
+  <h2>Payments and Pro</h2>
+  <p>Pro subscriptions are handled by <a href="https://extensionpay.com">ExtensionPay</a>, and payments are processed by <a href="https://stripe.com/privacy">Stripe</a>. When you subscribe, you enter your email address and payment details on ExtensionPay's and Stripe's own pages, not inside the extension. FlipComp never sees your card details.</p>
+  <p>The developer can see the email address and subscription status of paying users in the ExtensionPay dashboard, and uses them only to provide Pro and to answer support requests. ExtensionPay's and Stripe's own privacy policies describe how they handle your information.</p>
+
+  <h2>Problem reports</h2>
+  <p>If you click "Report a problem", your email program opens a new message that includes the address of the listing, the title and price FlipComp read, the kind of problem and your browser version. Nothing is sent unless you choose to send that email.</p>
+
+  <h2>What FlipComp does not do</h2>
+  <ul>
+    <li>It does not sell, rent or share your data.</li>
+    <li>It does not show ads or track you across websites.</li>
+    <li>It does not read any website other than Facebook Marketplace listings, eBay search pages and extensionpay.com.</li>
+    <li>It does not use your data for anything other than pricing Marketplace listings and providing Pro. This use of data follows the Chrome Web Store User Data Policy, including its Limited Use requirements.</li>
+  </ul>
+
+  <h2>Permissions</h2>
+  <ul>
+    <li><code>storage</code>: saves your settings and the results described above on your computer.</li>
+    <li><code>offscreen</code>: reads eBay's result pages in a hidden page inside the extension.</li>
+    <li>facebook.com: reads Marketplace listings and shows the FlipComp card on them.</li>
+    <li>www.ebay.com: loads eBay's sold-listings searches and reads the background tabs FlipComp opens.</li>
+    <li>signin.ebay.com: notices when eBay asks you to sign in, so FlipComp can tell you.</li>
+    <li>fbcdn.net (Facebook's image server): loads a listing's main photo when the AI needs it.</li>
+    <li>extensionpay.com: lets the payment page tell the extension that a payment went through.</li>
+  </ul>
+
+  <h2>Children</h2>
+  <p>FlipComp is not directed at children under 13, and it does not knowingly collect information from them.</p>
+
+  <h2>Changes to this policy</h2>
+  <p>If this policy changes, the new version will be posted on this page with a new effective date.</p>
+
+  <h2>Contact</h2>
+  <p>Questions about this policy can be sent to <a href="mailto:support@theantlerconvoy.com">support@theantlerconvoy.com</a>.</p>
+
+  <p class="muted" style="margin-top:32px;font-size:14px">FlipComp is not affiliated with or endorsed by eBay Inc. or Meta Platforms, Inc. eBay is a trademark of eBay Inc. Facebook is a trademark of Meta Platforms, Inc.</p>
+</main>
+</body>
+</html>

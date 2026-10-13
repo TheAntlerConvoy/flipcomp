@@ -24,10 +24,10 @@
 <body>
 <main>
   <h1>FlipComp Privacy Policy</h1>
-  <p class="muted">Effective September 27, 2026</p>
+  <p class="muted">Effective October 13, 2026</p>
 
   <div class="summary">
-    <p style="margin:0">FlipComp reads the Facebook Marketplace listing you are looking at and sends the listing text, and sometimes its main photo, to the FlipComp server. The server uses an AI model to turn the listing into an eBay search. FlipComp then loads eBay's sold listings for that search from your own browser and shows the results next to the listing. FlipComp does not read your Facebook or eBay account details, does not show ads, and does not sell or share your data.</p>
+    <p style="margin:0">FlipComp reads the Facebook Marketplace listing you are looking at and sends the listing text, and sometimes its main photo, to the FlipComp server. The server uses an AI model from Anthropic or OpenAI to turn the listing into an eBay search. FlipComp then loads eBay's sold listings for that search from your own browser and shows the results next to the listing. FlipComp does not read your Facebook or eBay account details, does not show ads, and does not sell or share your data.</p>
   </div>
 
   <h2>What FlipComp reads on Facebook</h2>
@@ -43,18 +43,23 @@
     <li>If you have opened the FlipComp payment page, your ExtensionPay key, so the server can confirm with ExtensionPay whether you have Pro.</li>
     <li>If you type your own eBay search, that search.</li>
   </ul>
-  <p>Like any website, the server also receives your IP address. FlipComp turns it into a one-way code (a hash) to limit how many free lookups can come from one internet connection, and those codes are deleted within 2 days.</p>
+  <p>Like any website, the server also receives your IP address. FlipComp turns it into a code made with a secret key (a keyed hash), which can't be turned back into the address without that key. The code is used only to limit how many free lookups can come from one internet connection, and it is deleted within 2 days. Cloudflare, which runs the server, also counts requests per IP address for a minute at a time to stop floods of requests.</p>
 
   <h2>How the AI is used</h2>
-  <p>The server sends the listing text, and the photo when needed, to the OpenAI API. The AI answers with an eBay search, a short name for the item, its likely condition and a shipping size. FlipComp asks OpenAI not to store these answers. OpenAI does not use data sent through its API to train its models, and it may keep API data for up to 30 days to watch for abuse. <a href="https://openai.com/policies/api-data-usage-policies">OpenAI's API data policy</a> describes how OpenAI handles API data.</p>
+  <p>The server sends the listing text, and the photo when needed, to one of two AI services: Anthropic's Claude API, or the OpenAI API. One of them answers each lookup, and the other is used only if the first one fails. The AI answers with an eBay search, a short name for the item, its likely condition and a shipping size. Each request also carries the one-way code of your install ID (described above), so the AI provider can tell users apart if someone misuses the service. It never carries your name, email or IP address.</p>
+  <p>For free users, a listing photo is first checked by OpenAI's moderation service, and a photo it flags is never sent on.</p>
+  <p>Neither Anthropic nor OpenAI uses data sent through their APIs to train their models. Both may keep API data for up to 30 days to watch for abuse, and FlipComp asks OpenAI not to store its answers. <a href="https://privacy.claude.com/">Anthropic's privacy center</a> and <a href="https://openai.com/policies/api-data-usage-policies">OpenAI's API data policy</a> describe how each handles API data.</p>
 
   <h2>What the FlipComp server stores</h2>
+  <p>Below, a "one-way code" is a hash: it can be matched against the same ID again, but it can't be turned back into the ID. Pro users are counted by a one-way code of their ExtensionPay key instead of their install ID.</p>
   <ul>
-    <li>The AI's answer for each listing (the Facebook listing number, the suggested eBay search, the item name, condition and size) for 14 days, so the next person who checks the same listing gets the answer without another AI request.</li>
-    <li>How many lookups each install made that day, stored under a one-way code of the install ID, for 2 days.</li>
-    <li>A cost record for each AI request: a one-way code of the install ID, the Facebook listing number, the number of AI tokens used and the cost. These are kept for 180 days so the developer can see what the service costs.</li>
+    <li>The AI's answer for each listing (the suggested eBay search, the item name, condition and size) for 14 days, so the next person who checks the same listing gets the answer without another AI request. It is filed under a one-way code made from the listing's details, not under the listing number.</li>
+    <li>The lookups each install made that day: the one-way code of the install ID and the Facebook listing number of each listing checked, so the same listing isn't counted twice in a day. These are deleted after 2 to 3 days.</li>
+    <li>A cost record for each AI request: the one-way code of the install ID, the date, whether it was a free or Pro lookup, the AI model, whether a photo was sent, the number of AI tokens used, the cost and whether it worked. It does not include the listing number. These are kept for 180 days so the developer can see what the service costs and trace misuse.</li>
     <li>Whether a one-way code of an ExtensionPay key belongs to a Pro subscriber, for up to 60 days.</li>
+    <li>Daily totals (lookups and AI spending), which contain no IDs.</li>
   </ul>
+  <p>Cloudflare also keeps the server's own logs for a few days, for fixing errors. They record events such as "AI answered" or "used the title instead", with token counts and cost, but not listing numbers, listing text or photos.</p>
   <p>The server does not store listing descriptions or photos.</p>
 
   <h2>What FlipComp does on eBay</h2>

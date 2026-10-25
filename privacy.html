@@ -42,7 +42,7 @@
     <li>A random ID that FlipComp creates when it is installed. It is used to count free lookups and is not linked to your name or accounts.</li>
     <li>If you have opened the FlipComp payment page, your ExtensionPay key, so the server can confirm with ExtensionPay whether you have Pro.</li>
     <li>If you type your own eBay search, that search.</li>
-    <li>Whether this copy of FlipComp was installed new on version 1.2.0 or later, and, if you open the Pro plans or click one, that you did and which plan (yearly or monthly). This is for the Pro price test described below.</li>
+    <li>Whether this copy of FlipComp was installed new on version 1.2.0 or later, and when, and, if you open the Pro plans or click one, that you did and which plan (yearly or monthly). This is for the Pro price test described below; the install time is used to check whether the install came after the test started, and is not stored.</li>
   </ul>
   <p>Like any website, the server also receives your IP address. FlipComp turns it into a code made with a secret key (a keyed hash), which can't be turned back into the address without that key. The code is used only to limit how many free lookups can come from one internet connection (so reinstalling FlipComp doesn't give more), and it is deleted within 91 days of the first free lookup from that connection. Cloudflare, which runs the server, also counts requests per IP address for a minute at a time to stop floods of requests.</p>
 
